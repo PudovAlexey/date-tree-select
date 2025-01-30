@@ -11,6 +11,7 @@ function DateTreeSelectContextProvider<T extends DateEnum>({dateTreeProps ,child
         checked: false,
         children: [{
             date: 2024,
+            checked: false,
             children: []
         }]
     });
