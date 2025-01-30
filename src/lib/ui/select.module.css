@@ -1,0 +1,52 @@
+.select {
+    padding: 13px 8px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    border-radius: 12px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.select input {
+    outline: none;
+    border: none;
+}
+
+.schevron {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.dropdown {
+    border: 1px solid gray;
+    position: fixed;
+    z-index: 10;
+    border-radius: 12px;
+    overflow: auto;
+}
+
+.drowdown_wrapper {
+    height: max-content;
+}
+
+.open_animate {
+    transition: height .3s ease-out;
+}
+
+.turn_control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    transform: rotate(0);
+  
+}
+
+.turn {
+  transform: rotate(180deg);
+}
+  
