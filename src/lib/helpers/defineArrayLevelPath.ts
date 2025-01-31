@@ -1,7 +1,7 @@
 import { DateEnum } from "../api/types";
 
 function defineArrayLevelPath(current: DateEnum) {
-    const fullPath = ['century', 'year', 'month', 'day', 'hour', 'minute', 'second'];
+    const fullPath = ['year', 'month', 'day', 'hour', 'minute', 'second'];
 
     const res = [];
     let start = false

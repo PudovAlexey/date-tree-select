@@ -46,6 +46,12 @@
   
 }
 
+.date_item {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
 .turn {
   transform: rotate(180deg);
 }

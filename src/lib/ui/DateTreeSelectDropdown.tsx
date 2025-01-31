@@ -1,6 +1,7 @@
 import React from "react";
 import { DateEnum, ValueType } from "../api/types"
 import { Checkbox } from "./Checkbox";
+import cls from './select.module.css';
 
 type DateTreeSelectDropdownProps<T extends DateEnum> = {
     node: ValueType<T>
@@ -17,7 +18,7 @@ const DateTreeSelectDropdown = React.memo(function DateTreeSelectDropdown<T exte
                 console.log(child, 'cjl')
                 return (
                     <div key={child.date}>
-                        <div>
+                        <div className={cls.date_item}>
                             <Checkbox checked={child.checked}/>
                             <div>{child.date}</div>
                         </div>

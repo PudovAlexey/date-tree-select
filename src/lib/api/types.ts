@@ -1,8 +1,7 @@
 import { CSSProperties } from "react";
 
-type DateEnum = 'century' | 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
+type DateEnum = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
 
-type Century = number;
 type Year = number;
 type Month = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31;
@@ -10,9 +9,10 @@ type Time = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
     | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 51 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60;
 
 type FullDateTree<T> = {
-    date: T | null,
+    date: T | 'root',
+    label: string,
     checked: boolean
-    children: FullDateTree<Year>[]
+    children?: FullDateTree<FullDateTree>[]
 };
 
 
@@ -20,10 +20,8 @@ type TimeTree = FullDateTree<Time>;
 type DayTree = FullDateTree<Day>;
 type MonthTree = FullDateTree<Month>;
 type YearTree = FullDateTree<Year>;
-type CenturyTree = FullDateTree<Century>;
 
-type ValueType<T extends DateEnum> = T extends 'century' ? CenturyTree :
-T extends 'year' ? YearTree : 
+type ValueType<T extends DateEnum> = T extends 'year' ? YearTree : 
 T extends 'month' ? MonthTree : T extends 'day' ? DayTree : TimeTree;
 
 type DateTreeSelectProps<T extends DateEnum> = {
@@ -59,4 +57,12 @@ export type {
     DateTreeSelectValueProps,
     DateEnum,
     ValueType,
+    TimeTree,
+    DayTree,
+    MonthTree,
+    YearTree,
+    Time,
+    Day,
+    Month,
+    Year,
 }
