@@ -9,10 +9,10 @@ type Time = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
     | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 51 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60;
 
 type FullDateTree<T> = {
+    id: string,
     date: T | 'root',
     label: string,
-    checked: boolean
-    children?: FullDateTree<FullDateTree>[]
+    children?: FullDateTree<FullDateTree<T>>[]
 };
 
 
@@ -51,6 +51,8 @@ type DateTreeSelectValueProps = Pick<DateTreeSelectProps<DateEnum>,
 'addonAfter' |
 'addonBefore'>
 
+type SelectionDict = Record<string, boolean>;
+
 export type {
     DateTreeSelectProps,
     DateTreeSelectProviderProps,
@@ -64,5 +66,6 @@ export type {
     Time,
     Day,
     Month,
+    SelectionDict,
     Year,
 }

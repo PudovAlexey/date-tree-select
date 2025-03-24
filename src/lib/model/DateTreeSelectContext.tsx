@@ -1,18 +1,31 @@
 import { createContext, PropsWithChildren, useCallback, useContext, useMemo, useRef, useState } from "react";
-import { DateEnum, DateTreeSelectProviderProps, DateTreeSelectValueProps, ValueType } from "../api/types";
+import { DateEnum, DateTreeSelectProviderProps, DateTreeSelectValueProps, SelectionDict, ValueType } from "../api/types";
 
-const DateTreeSelectContext = createContext<Partial<DateTreeSelectValueProps>>({});
+const DateTreeSelectContext = createContext<Partial<DateTreeSelectValueProps & {
+    handleExpandedValueChange: (id: string) => void;
+    handleValueChange: (id: string) => void;
+    getExpandedValueById: (id: string) => boolean;
+    getValueById: (id: string) => boolean;
+}>>({});
 
-function DateTreeSelectContextProvider<T extends DateEnum>({dateTreeProps ,children}: PropsWithChildren<Partial<DateTreeSelectProviderProps<T>>>) {
+function DateTreeSelectContextProvider<T extends DateEnum>({ dateTreeProps, children }: PropsWithChildren<Partial<DateTreeSelectProviderProps<T>>>) {
     const [open, setOpen] = useState(true);
+    const [checkedDict, setCheckedDict] = useState<SelectionDict>({});
+    const [expandedDict, setExpandedDict] = useState<SelectionDict>({});
 
     const [value, setValue] = useState<ValueType<T>>({
-        date: null,
-        checked: false,
+        id: 'root',
+        date: 'root',
         children: [{
+            id: `root%_%${2024}`,
             date: 2024,
-            checked: false,
-            children: []
+            children: [
+                {
+                    id: `root%_%${2024}%_%${1}`,
+                    date: 1,
+                    children: []
+                }
+            ]
         }]
     });
 
@@ -22,24 +35,63 @@ function DateTreeSelectContextProvider<T extends DateEnum>({dateTreeProps ,child
         setOpen(!open)
     }, [open]);
 
-    const handleDropdownValueChange = useCallback((level: DateEnum, node: ValueType<T>) => {
+    const handleExpandedValueChange = useCallback((id: string) => {
+        setExpandedDict((prev) => {
+            return {
+                ...prev,
+                [id]: !prev?.[id]
+            }
+        });
+    }, []);
+
+    const handleValueChange = useCallback((id: string) => {
+        setCheckedDict((prev) => {
+            return {
+                ...prev,
+                [id]: !prev?.[id]
+            }
+        })
 
     }, []);
+
+    const getExpandedValueById = useCallback((id: string) => {
+            return expandedDict?.[id];
+    }, [expandedDict]);
+
+    const getValueById = useCallback((id: string) => {
+        return checkedDict?.[id];
+}, [checkedDict]);
 
     return (
         <DateTreeSelectContext.Provider value={useMemo(() => ({
             dropDownOpen: open,
             addonAfter: dateTreeProps?.addonAfter,
             addonBefore: dateTreeProps?.addonBefore,
-            value: value,
-            onDropdownOpenChange: handleDropdownChange,
+            value,
+            handleDropdownChange,
+            handleExpandedValueChange,
+            handleValueChange,
+            getExpandedValueById,
+            getValueById,
+            // getValueById,
+            // onDropdownOpenChange: handleDropdownChange,
+            // handleExpandedValueChange,
+            // handleValueChange,
 
         }), [
             open,
             dateTreeProps?.addonAfter,
             dateTreeProps?.addonBefore,
             value,
-            handleDropdownChange
+            handleDropdownChange,
+            handleExpandedValueChange,
+            handleValueChange,
+            getExpandedValueById,
+            getValueById,
+            // getCheckedValueById,
+            // handleDropdownChange,
+            // handleDropdownExpandChange,
+            // handleDropdownValueChange,
         ])}>
             {children}
         </DateTreeSelectContext.Provider>

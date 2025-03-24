@@ -55,4 +55,22 @@
 .turn {
   transform: rotate(180deg);
 }
+
+.deep {
+    margin-left: 15px;
+}
+
+.checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.checkboxChecked {
+    background: rgba(41, 125, 234, 1);
+}
+
+.checkboxUnchecked {
+    border: 1px solid rgba(229, 232, 235, 1);
+}
   

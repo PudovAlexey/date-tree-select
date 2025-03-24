@@ -28,8 +28,6 @@ function Select<T extends DateEnum>() {
         }
     }, [dropDownOpen]);
 
-    console.log(value, 'value');
-
     return (
         <div>
             <div role="presentation" onClick={onDropdownOpenChange} ref={inputRef} className={cls.select}>
@@ -46,7 +44,7 @@ function Select<T extends DateEnum>() {
             </div>
             {createPortal(<div ref={dropdownRef} className={classNames(cls.dropdown, cls.open_animate)}>
             <div className={cls.drowdown_wrapper}>
-            <DateTreeSelectDropdown node={value}/>
+            <DateTreeSelectDropdown level={'year'} node={value}/>
             </div>
             </div>, document.body)}
         </div>

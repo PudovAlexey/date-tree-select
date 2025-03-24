@@ -1,29 +1,28 @@
 import React from "react";
 import { DateEnum, ValueType } from "../api/types"
-import { Checkbox } from "./Checkbox";
-import cls from './select.module.css';
+import { defineChildByTree } from "../helpers/defineChildByTree";
+import { DateTreeSelectDropdownItem } from "./DateTreeSelectDropdownItem";
 
 type DateTreeSelectDropdownProps<T extends DateEnum> = {
     node: ValueType<T>
-    level: DateEnum
+    level: DateEnum | null
 };
 
-const DateTreeSelectDropdown = React.memo(function DateTreeSelectDropdown<T extends DateEnum>({node, level}: DateTreeSelectDropdownProps<T>) {
+const DateTreeSelectDropdown = React.memo(function DateTreeSelectDropdown<T extends DateEnum>({ node, level = 'year' }: DateTreeSelectDropdownProps<T>) {
 
-    console.log(node.children, 'child');
+    if (level === null) {
+        return null
+    }
 
     return (
-        <div>
-            {node.children.map((child) => {
-                console.log(child, 'cjl')
+        <div role="presentation">
+            {(node?.children || []).map((child) => {
+                
                 return (
-                    <div key={child.date}>
-                        <div className={cls.date_item}>
-                            <Checkbox checked={child.checked}/>
-                            <div>{child.date}</div>
-                        </div>
-                        <DateTreeSelectDropdown key={node.date} node={child} />
-                    </div>
+                    <DateTreeSelectDropdownItem value={child}>
+                       <DateTreeSelectDropdown level={defineChildByTree(level)} key={node.date} node={child} />
+
+                   </DateTreeSelectDropdownItem>
                 )
             })}
         </div>
